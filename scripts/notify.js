@@ -81,7 +81,7 @@ Hooks.on("ready", () => {
     const message = messageFormat
       .replace('{name}', journalEntry.name)
       .replace('{user}', user.name)
-      .replace('{link}', `[Foundry VTT](${link})`);
+      .replace('{link}', `<${link}>`);
 
     sendToDiscord(message, WEBHOOK_URL);
   });
@@ -105,7 +105,7 @@ Hooks.on("ready", () => {
         }
         sendToDiscord(message, SECOND_WEBHOOK_URL);
       }
-      return false; // Prevent the command from being processed further
+      return content;
     }
   });
 });
