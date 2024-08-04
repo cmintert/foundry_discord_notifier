@@ -1,6 +1,5 @@
 {
   "title": "Foundry Discord Notifier",
-  "id": "foundry-discord-notifier",
   "description": "Sends a notification to Discord when a new journal entry is created.",
   "version": "0.1.1",
   "authors": [
@@ -17,5 +16,5 @@
     "verified": "12.330"
   },
   "manifest": "https://raw.githubusercontent.com/cmintert/foundry_discord_notifier/master/module.json",
-  "download": "https://github.com/cmintert/foundry_discord_notifier/archive/refs/heads/master.zip",
+  "download": "https://github.com/cmintert/foundry_discord_notifier/archive/refs/heads/master.zip"
 }
