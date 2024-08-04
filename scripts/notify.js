@@ -40,7 +40,7 @@ Hooks.on("ready", () => {
       console.error('Journal entry not found.');
       return;
     }
-    const link = `${window.location.origin}${journalEntryData.sheet.url}`;
+    const link = `${window.location.origin}/journal/${journalEntry.id}`;
 
     // Replace placeholders in the message format
     const user = game.users.get(userId);
