@@ -105,7 +105,7 @@ Hooks.on("ready", () => {
         }
         sendToDiscord(message, SECOND_WEBHOOK_URL);
       }
-      return content;
+      return false;
     }
   });
 });
