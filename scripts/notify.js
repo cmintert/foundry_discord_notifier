@@ -15,7 +15,7 @@ Hooks.once('init', () => {
     scope: "world",
     config: true,
     type: String,
-    default: "📘 **New Journal Entry Created**\n**Title**: {name}\n**Created by**: {user}\n {link}"
+    default: "📘 **New Journal Entry Created**\n**Title**: {name}\n**Created by**: {user}\n <{link}>"
   });
 });
 
