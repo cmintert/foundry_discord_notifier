@@ -17,6 +17,18 @@ Hooks.once('init', () => {
     type: String,
     default: "📘 **New Journal Entry Created**\n**Title**: {name}\n**Created by**: {user}\n <{link}>"
   });
+
+
+  // Register a new setting for the second Discord webhook URL
+  game.settings.register("foundry-discord-notifier", "secondWebhookURL", {
+    name: "Second Discord Webhook URL",
+    hint: "The URL of the second Discord webhook to send /dnote notifications to.",
+    scope: "world",
+    config: true,
+    type: String,
+    default: ""
+  });
+
 });
 
 // Hook into the creation of new journal entries
@@ -76,4 +88,29 @@ Hooks.on("ready", () => {
 
     sendToDiscord(message);
   });
+
+  // Register chat command
+  Hooks.on("chatMessage", (chatLog, messageText, chatData) => {
+    if (messageText.startsWith("/dnote")) {
+      const content = messageText.slice(9).trim(); // Extract text after "/dnote"
+      if (content) {
+
+        // get the current timestamp
+        const timestamp = new Date().toLocaleString();
+
+        // concat message with timestamp
+        const message = ` [${timestamp}] ${content}`;
+
+        // Fetch the second Discord webhook URL from module settings
+        const SECOND_WEBHOOK_URL = game.settings.get("foundry-discord-notifier", "secondWebhookURL");
+        if (!SECOND_WEBHOOK_URL) {
+          console.error('Second Discord webhook URL is not set. Please configure it in the module settings.');
+          return;
+        }
+        sendToDiscord(content, SECOND_WEBHOOK_URL);
+      }
+      return content;
+    }
+  });
+
 });
