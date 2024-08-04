@@ -104,6 +104,14 @@ Hooks.on("ready", () => {
           return false;
         }
         sendToDiscord(message, SECOND_WEBHOOK_URL);
+
+        // Write content to chat with note
+        const chatMessage = `${message} (Note: This message was sent to Discord)`;
+        ChatMessage.create({
+          user: game.user.id,
+          speaker: ChatMessage.getSpeaker(),
+          content: chatMessage
+        });
       }
       return false;
     }
