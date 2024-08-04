@@ -9,31 +9,13 @@
       "url": "https://github.com/cmintert/foundry_discord_notifier"
     }
   ],
-  "esmodules": ["scripts/notify.js"],
+  "esmodules": [
+    "scripts/notify.js"
+  ],
   "compatibility": {
     "minimum": "12.330",
     "verified": "12.330"
   },
   "manifest": "https://raw.githubusercontent.com/cmintert/foundry_discord_notifier/master/module.json",
-  "download": "https://github.com/cmintert/foundry_discord_notifier/archive/refs/heads/master.zip",
-  "settings": [
-    {
-      "key": "webhookURL",
-      "name": "Discord Webhook URL",
-      "hint": "The URL of the Discord webhook to send notifications to.",
-      "scope": "world",
-      "config": true,
-      "type": "String",
-      "default": ""
-    },
-    {
-      "key": "messageFormat",
-      "name": "Notification Message Format",
-      "hint": "Customize the format of the notification message. Use {name}, {user}, {link} as placeholders.",
-      "scope": "world",
-      "config": true,
-      "type": "String",
-      "default": "**New Journal Entry Created**\n**Title**: {name}\n**Created by**: {user}\n**Link**: {link}"
-    }
-  ]
+  "download": "https://github.com/cmintert/foundry_discord_notifier/archive/refs/heads/master.zip"
 }
