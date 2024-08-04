@@ -92,7 +92,7 @@ Hooks.on("ready", () => {
   // Register chat command
   Hooks.on("chatMessage", (chatLog, messageText, chatData) => {
     if (messageText.startsWith("/dnote")) {
-      const content = messageText.slice(9).trim(); // Extract text after "/dnote"
+      const content = messageText.slice(6).trim(); // Extract text after "/dnote"
       if (content) {
 
         // get the current timestamp
