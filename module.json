@@ -7,7 +7,8 @@
   "esmodules": ["scripts/notify.js"],
   "minimumCoreVersion": "12.330",
   "compatibleCoreVersion": "12.330",
-  "manifest": "path/to/module.json",
+  "manifest": "https://raw.githubusercontent.com/cmintert/foundry_discord_notifier/master/module.json",
+  "download": "https://github.com/cmintert/foundry_discord_notifier/archive/refs/heads/master.zip",
   "settings": [
     {
       "key": "webhookURL",
@@ -25,7 +26,7 @@
       "scope": "world",
       "config": true,
       "type": "String",
-      "default": "📘 **New Journal Entry Created**\n**Title**: {name}\n**Created by**: {user}\n**Link**: {link}"
+      "default": "**New Journal Entry Created**\n**Title**: {name}\n**Created by**: {user}\n**Link**: {link}"
     }
   ]
 }
