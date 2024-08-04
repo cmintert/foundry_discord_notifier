@@ -18,8 +18,6 @@ Hooks.once('init', () => {
     default: "📘 **New Journal Entry Created**\n**Title**: {name}\n**Created by**: {user}\n <{link}>"
   });
 
-
-  // Register a new setting for the second Discord webhook URL
   game.settings.register("foundry-discord-notifier", "secondWebhookURL", {
     name: "Second Discord Webhook URL",
     hint: "The URL of the second Discord webhook to send /dnote notifications to.",
@@ -28,11 +26,31 @@ Hooks.once('init', () => {
     type: String,
     default: ""
   });
-
 });
 
-// Hook into the creation of new journal entries
+// Function to send a message to Discord
+async function sendToDiscord(content, webhookURL) {
+  const payload = JSON.stringify({ content });
+
+  try {
+    const response = await fetch(webhookURL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: payload
+    });
+
+    if (!response.ok) {
+      console.error(`Discord webhook error: ${response.status} ${response.statusText}`);
+    } else {
+      console.log('Notification sent to Discord successfully.');
+    }
+  } catch (error) {
+    console.error('Error posting to Discord:', error);
+  }
+}
+
 Hooks.on("ready", () => {
+  // Hook into the creation of new journal entries
   Hooks.on("createJournalEntry", (journalEntry, options, userId) => {
     if (userId !== game.user.id) return;
 
@@ -52,7 +70,7 @@ Hooks.on("ready", () => {
       console.error('Journal entry not found.');
       return;
     }
-    const link = `${window.location.origin}`
+    const link = `${window.location.origin}`;
 
     // Replace placeholders in the message format
     const user = game.users.get(userId);
@@ -65,28 +83,7 @@ Hooks.on("ready", () => {
       .replace('{user}', user.name)
       .replace('{link}', `[Foundry VTT](${link})`);
 
-    // Function to send a message to Discord
-    async function sendToDiscord(content) {
-      const payload = JSON.stringify({ content });
-
-      try {
-        const response = await fetch(WEBHOOK_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: payload
-        });
-
-        if (!response.ok) {
-          console.error(`Discord webhook error: ${response.status} ${response.statusText}`);
-        } else {
-          console.log('Notification sent to Discord successfully.');
-        }
-      } catch (error) {
-        console.error('Error posting to Discord:', error);
-      }
-    }
-
-    sendToDiscord(message);
+    sendToDiscord(message, WEBHOOK_URL);
   });
 
   // Register chat command
@@ -94,23 +91,21 @@ Hooks.on("ready", () => {
     if (messageText.startsWith("/dnote")) {
       const content = messageText.slice(6).trim(); // Extract text after "/dnote"
       if (content) {
-
         // get the current timestamp
         const timestamp = new Date().toLocaleString();
 
         // concat message with timestamp
-        const message = ` [${timestamp}] ${content}`;
+        const message = `[${timestamp}] ${content}`;
 
         // Fetch the second Discord webhook URL from module settings
         const SECOND_WEBHOOK_URL = game.settings.get("foundry-discord-notifier", "secondWebhookURL");
         if (!SECOND_WEBHOOK_URL) {
           console.error('Second Discord webhook URL is not set. Please configure it in the module settings.');
-          return;
+          return false;
         }
-        sendToDiscord(content, SECOND_WEBHOOK_URL);
+        sendToDiscord(message, SECOND_WEBHOOK_URL);
       }
-      return content;
+      return false; // Prevent the command from being processed further
     }
   });
-
 });
