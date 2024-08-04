@@ -1,3 +1,24 @@
+// Register settings in the Foundry VTT settings menu
+Hooks.once('init', () => {
+  game.settings.register("foundry-discord-notifier", "webhookURL", {
+    name: "Discord Webhook URL",
+    hint: "The URL of the Discord webhook to send notifications to.",
+    scope: "world",
+    config: true,
+    type: String,
+    default: ""
+  });
+
+  game.settings.register("foundry-discord-notifier", "messageFormat", {
+    name: "Notification Message Format",
+    hint: "Customize the format of the notification message. Use {name}, {user}, {link} as placeholders.",
+    scope: "world",
+    config: true,
+    type: String,
+    default: "📘 **New Journal Entry Created**\n**Title**: {name}\n**Created by**: {user}\n**Link**: {link}"
+  });
+});
+
 // Fetch the Discord webhook URL from module settings
 const WEBHOOK_URL = game.settings.get("foundry-discord-notifier", "webhookURL");
 
@@ -46,23 +67,4 @@ Hooks.on("createJournalEntry", (journalEntry, options, userId) => {
   sendToDiscord(message);
 });
 
-// Register settings in the Foundry VTT settings menu
-Hooks.once('init', () => {
-  game.settings.register("foundry-discord-notifier", "webhookURL", {
-    name: "Discord Webhook URL",
-    hint: "The URL of the Discord webhook to send notifications to.",
-    scope: "world",
-    config: true,
-    type: String,
-    default: ""
-  });
 
-  game.settings.register("foundry-discord-notifier", "messageFormat", {
-    name: "Notification Message Format",
-    hint: "Customize the format of the notification message. Use {name}, {user}, {link} as placeholders.",
-    scope: "world",
-    config: true,
-    type: String,
-    default: "📘 **New Journal Entry Created**\n**Title**: {name}\n**Created by**: {user}\n**Link**: {link}"
-  });
-});
