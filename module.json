@@ -1,0 +1,31 @@
+{
+  "name": "foundry-discord-notifier",
+  "title": "Foundry Discord Notifier",
+  "description": "Sends a notification to Discord when a new journal entry is created.",
+  "version": "1.1.0",
+  "author": "Christian Mintert",
+  "esmodules": ["scripts/notify.js"],
+  "minimumCoreVersion": "12.330",
+  "compatibleCoreVersion": "12.330",
+  "manifest": "path/to/module.json",
+  "settings": [
+    {
+      "key": "webhookURL",
+      "name": "Discord Webhook URL",
+      "hint": "The URL of the Discord webhook to send notifications to.",
+      "scope": "world",
+      "config": true,
+      "type": "String",
+      "default": ""
+    },
+    {
+      "key": "messageFormat",
+      "name": "Notification Message Format",
+      "hint": "Customize the format of the notification message. Use {name}, {user}, {link} as placeholders.",
+      "scope": "world",
+      "config": true,
+      "type": "String",
+      "default": "📘 **New Journal Entry Created**\n**Title**: {name}\n**Created by**: {user}\n**Link**: {link}"
+    }
+  ]
+}
