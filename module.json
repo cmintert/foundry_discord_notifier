@@ -1,7 +1,7 @@
 {
   "title": "Foundry Discord Notifier",
   "description": "Sends a notification to Discord when a new journal entry is created.",
-  "version": "0.1.1",
+  "version": "0.2",
   "authors": [
     {
       "name": "Christian Mintert",
